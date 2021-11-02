@@ -11,4 +11,8 @@ func DcHandler(router *gin.Engine) {
 		context.HTML(http.StatusOK, "dcs.html", nil)
 	})
 
+	router.GET("/api/datacenters", func(context *gin.Context) {
+		context.JSON(200, gin.H{})
+	})
+
 }
