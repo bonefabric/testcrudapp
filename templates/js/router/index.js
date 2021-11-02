@@ -23,6 +23,15 @@ export default new VueRouter({
 			meta: {
 				title: 'Log in'
 			}
+		},
+
+		{
+			name: 'datacenters',
+			path: 'datacenters',
+			component: () => import("../vue/views/datacenters/index"),
+			meta: {
+				title: 'Datacenters'
+			}
 		}
 	],
 });

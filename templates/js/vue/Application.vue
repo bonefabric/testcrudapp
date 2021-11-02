@@ -10,7 +10,7 @@ import topMenu from "./menus/topMenu";
 
 export default {
 	name: "Application",
-	mounted() {
+	beforeMount() {
 		this.$store.dispatch('init');
 		this.$router.beforeEach((to, from, next) => {
 			if (!this.$store.getters.isAuthorized && to.path !== '/login') {
@@ -18,10 +18,11 @@ export default {
 				return;
 			}
 			if (this.$store.getters.isAuthorized && to.path === '/login') return;
+			if (to.meta.title) document.title = to.meta.title;
 			next()
 		});
 		if (!this.$store.getters.isAuthorized && this.$route.path !== '/login') this.$router.push({name: 'login'});
-		if (this.$route.meta.title) document.title = this.$route.meta.title;
+		if (this.$store.getters.isAuthorized && this.$route.name !== 'index') this.$router.push({name: 'index'});
 	},
 	components: {
 		topMenu,
