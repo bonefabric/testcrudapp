@@ -1,10 +1,10 @@
 <template>
-	<h1>Index page</h1>
+	<h1>Create</h1>
 </template>
 
 <script>
 export default {
-	name: "index",
+	name: "create"
 }
 </script>
 

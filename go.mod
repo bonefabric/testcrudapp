@@ -5,6 +5,8 @@ go 1.17
 require (
 	github.com/gin-contrib/gzip v0.0.3
 	github.com/gin-gonic/gin v1.7.4
+	github.com/go-sql-driver/mysql v1.6.0
+	github.com/lakshanwd/db-helper v0.0.0-20180916190452-f117f35ced13
 )
 
 require (

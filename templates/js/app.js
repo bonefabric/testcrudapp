@@ -1,3 +1,6 @@
+import "bootstrap/dist/js/bootstrap.bundle.min";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 import Vue from "vue";
 
 import Application from "./vue/Application";

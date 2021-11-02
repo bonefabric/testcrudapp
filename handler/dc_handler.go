@@ -2,17 +2,16 @@ package handler
 
 import (
 	"github.com/gin-gonic/gin"
-	"net/http"
+	"testcrudapp/auth"
 )
 
-func DcHandler(router *gin.Engine) {
-
-	router.GET("/datacenters", func(context *gin.Context) {
-		context.HTML(http.StatusOK, "dcs.html", nil)
-	})
+func Dc_handle(router *gin.Engine) {
 
 	router.GET("/api/datacenters", func(context *gin.Context) {
-		context.JSON(200, gin.H{})
+		if !auth.Check(context) {
+			context.Status(403)
+			return
+		}
 	})
 
 }
