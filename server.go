@@ -2,12 +2,14 @@ package main
 
 import (
 	"fmt"
+	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
 func main() {
 	router := gin.Default()
+	router.Use(gzip.Gzip(gzip.DefaultCompression))
 
 	router.LoadHTMLFiles(
 		"./templates/index.html",

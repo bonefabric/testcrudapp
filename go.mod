@@ -2,7 +2,10 @@ module testcrudapp
 
 go 1.17
 
-require github.com/gin-gonic/gin v1.7.4
+require (
+	github.com/gin-contrib/gzip v0.0.3
+	github.com/gin-gonic/gin v1.7.4
+)
 
 require (
 	github.com/gin-contrib/sse v0.1.0 // indirect
