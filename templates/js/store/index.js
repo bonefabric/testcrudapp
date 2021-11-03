@@ -80,6 +80,17 @@ export default new Vuex.Store({
 				if (result.data) throw result.data;
 				throw 'Error ' + result.status;
 			}
+		},
+
+		async deleteDatacenter(state, id) {
+			const result = await axios.post('/api/datacenters/delete/' + id, {
+				email: state.getters.email,
+				password: state.getters.password,
+			});
+			if (result.status !== 200) {
+				if (result.data) throw result.data;
+				throw 'Error ' + result.status;
+			}
 		}
 
 	},

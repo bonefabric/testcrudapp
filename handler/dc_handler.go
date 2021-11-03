@@ -49,4 +49,16 @@ func DcHandle(router *gin.Engine) {
 		}
 	})
 
+	router.POST("/api/datacenters/delete/:id", func(context *gin.Context) {
+		//TODO auth
+		id := context.Param("id")
+		dcRepo := repository.GetDcRepository()
+		_, err := dcRepo.Remove(id)
+		if err != nil {
+			context.JSON(http.StatusBadRequest, err.Error())
+			return
+		}
+		context.JSON(http.StatusOK, true)
+	})
+
 }

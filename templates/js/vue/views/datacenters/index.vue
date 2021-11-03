@@ -9,6 +9,7 @@
 				<th scope="col">Login</th>
 				<th scope="col">Password</th>
 				<th scope="col">Comment</th>
+				<th scope="col"></th>
 			</tr>
 			</thead>
 			<tbody>
@@ -18,6 +19,7 @@
 				<td>{{ datacenter.login }}</td>
 				<td>{{ datacenter.pass }}</td>
 				<td>{{ datacenter.comment }}</td>
+				<td><i class="bi bi-trash" style="cursor: pointer" @click="deleteDc(datacenter.id)"></i></td>
 			</tr>
 			</tbody>
 		</table>
@@ -53,6 +55,22 @@ export default {
 		...mapGetters([
 			'datacenters'
 		]),
+	},
+	methods: {
+		deleteDc(id) {
+			this.loading = true;
+			this.error = '';
+			this.$store.dispatch('deleteDatacenter', id)
+					.then(() => {
+						this.loading = true;
+						this.error = '';
+						this.$store.dispatch('loadDatacenters')
+								.catch(e => this.error = e)
+								.finally(() => this.loading = false);
+					})
+					.catch(e => this.error = e)
+					.finally(() => this.loading = false);
+		}
 	}
 }
 </script>
