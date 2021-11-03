@@ -71,10 +71,10 @@ export default new Vuex.Store({
 				email: state.getters.email,
 				password: state.getters.password,
 
-				dc_name: data.dc_name,
-				dc_email: data.dc_email,
-				dc_pass: data.dc_pass,
-				dc_comment: data.dc_comment,
+				dc: data.dc_name,
+				login: data.dc_email,
+				pass: data.dc_pass,
+				comment: data.dc_comment,
 			});
 			if (result.status !== 200) throw 'Error ' + result.status;
 		}

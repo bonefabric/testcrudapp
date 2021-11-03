@@ -28,3 +28,8 @@ func (repo DcRepo) Select() (*list.List, error) {
 	}
 	return util.ExecuteReader(DbConnection, "select id, dc, login, pass, comment from datacenter", reader)
 }
+
+func (repo DcRepo) Insert(doc interface{}) (int64, error) {
+	dc := doc.(entity.Dc)
+	return util.ExecuteInsert(DbConnection, "insert into datacenter(dc, login, pass, comment) values (?,?,?,?)", dc.Name, dc.Login, dc.Pass, dc.Comment)
+}
