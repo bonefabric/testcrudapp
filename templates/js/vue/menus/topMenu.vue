@@ -11,6 +11,9 @@
 				<li class="nav-item">
 					<router-link :to="{name: 'nets'}" class="nav-link" active-class="active" exact>Nets</router-link>
 				</li>
+				<li class="nav-item">
+					<router-link :to="{name: 'ips'}" class="nav-link" active-class="active" exact>IPs</router-link>
+				</li>
 			</ul>
 		</div>
 	</nav>

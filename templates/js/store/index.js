@@ -18,6 +18,11 @@ export default new Vuex.Store({
 			},
 			nets: {
 				list: [],
+				loaded: false,
+			},
+			ips: {
+				list: [],
+				loaded: false,
 			}
 		}
 	},
@@ -30,6 +35,10 @@ export default new Vuex.Store({
 		datacentersLoaded: state => state.application.datacenters.loaded,
 
 		nets: state => state.application.nets.list,
+		netsLoaded: state => state.application.nets.loaded,
+
+		ips: state => state.application.ips.list,
+		ipsLoaded: state => state.application.ips.loaded,
 	},
 	mutations: {
 		setAuthorized: (state, value = true) => state.account.authorized = value,
@@ -40,7 +49,14 @@ export default new Vuex.Store({
 			state.application.datacenters.list = data;
 			state.application.datacenters.loaded = true;
 		},
-		setNets: (state, data) => state.application.nets.list = data,
+		setNets: (state, data) => {
+			state.application.nets.list = data;
+			state.application.nets.loaded = true;
+		},
+		setIps: (state, data) => {
+			state.application.ips.list = data;
+			state.application.ips.loaded = true;
+		},
 	},
 	actions: {
 
@@ -68,7 +84,6 @@ export default new Vuex.Store({
 		},
 
 		async loadDatacenters(state) {
-			state.commit('setDatacenters', []);
 			const result = await axios.post('/api/datacenters/list', {
 				email: state.getters.email,
 				password: state.getters.password,
@@ -122,7 +137,6 @@ export default new Vuex.Store({
 		},
 
 		async loadNets(state) {
-			state.commit('setNets', []);
 			const result = await axios.post('/api/nets/list', {
 				email: state.getters.email,
 				password: state.getters.password,
@@ -168,6 +182,55 @@ export default new Vuex.Store({
 
 		async deleteNet(state, id) {
 			const result = await axios.post('/api/nets/delete/' + id, {
+				email: state.getters.email,
+				password: state.getters.password,
+			});
+			if (result.status !== 200) {
+				if (result.data) throw result.data;
+				throw 'Error ' + result.status;
+			}
+		},
+
+		async loadIps(state) {
+			const result = await axios.post('/api/ips/list', {
+				email: state.getters.email,
+				password: state.getters.password,
+			});
+			if (result.status !== 200) throw 'Error ' + result.status;
+			state.commit('setIps', result.data);
+		},
+
+		async saveIp(state, data) {
+			const result = await axios.post('/api/ips/create', {
+				email: state.getters.email,
+				password: state.getters.password,
+
+				ip: data.ip,
+				net_id: data.net_id,
+			});
+			if (result.status !== 200) {
+				if (result.data) throw result.data;
+				throw 'Error ' + result.status;
+			}
+		},
+
+		async updateIp(state, data) {
+			const result = await axios.post('/api/ips/update', {
+				email: state.getters.email,
+				password: state.getters.password,
+
+				id: data.id,
+				ip: data.ip,
+				net_id: data.net_id,
+			});
+			if (result.status !== 200) {
+				if (result.data) throw result.data;
+				throw 'Error ' + result.status;
+			}
+		},
+
+		async deleteIp(state, id) {
+			const result = await axios.post('/api/ips/delete/' + id, {
 				email: state.getters.email,
 				password: state.getters.password,
 			});

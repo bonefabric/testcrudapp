@@ -77,5 +77,31 @@ export default new VueRouter({
 			}
 		},
 
+		//Ips
+		{
+			name: 'ips',
+			path: '/ips',
+			component: () => import("../vue/views/ips/index"),
+			meta: {
+				title: 'IPs'
+			}
+		},
+		{
+			name: 'ipsCreate',
+			path: '/ips/create',
+			component: () => import("../vue/views/ips/create"),
+			meta: {
+				title: 'Create IP'
+			}
+		},
+		{
+			name: 'ipsEdit',
+			path: '/ips/edit/:id',
+			component: () => import("../vue/views/ips/edit"),
+			meta: {
+				title: 'Edit IP'
+			}
+		},
+
 	],
 });
