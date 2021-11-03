@@ -33,7 +33,7 @@
 </template>
 
 <script>
-// import {required, minLength, maxLength, email} from 'vuelidate/lib/validators';
+import {required, minLength, maxLength, email} from 'vuelidate/lib/validators';
 
 export default {
 	name: "create",
@@ -48,11 +48,10 @@ export default {
 		}
 	},
 	validations: {
-		//TODO validations
-		datacenter: {},
-		email: {},
-		password: {},
-		comment: {},
+		datacenter: {required, minLength: minLength(3), maxLength: maxLength(200)},
+		email: {required, email},
+		password: {required, minLength: minLength(3), maxLength: maxLength(200)},
+		comment: {maxLength: maxLength(200)},
 	},
 	methods: {
 		save() {
