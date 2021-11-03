@@ -25,6 +25,7 @@ func main() {
 
 	auth.Route(router)
 	handler.DcHandle(router)
+	handler.NetHandle(router)
 
 	router.GET("/bundle/:name", func(c *gin.Context) {
 		name := c.Param("name")

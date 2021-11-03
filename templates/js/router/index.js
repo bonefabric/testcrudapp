@@ -51,6 +51,31 @@ export default new VueRouter({
 			}
 		},
 
+		//Nets
+		{
+			name: 'nets',
+			path: '/nets',
+			component: () => import("../vue/views/nets/index"),
+			meta: {
+				title: 'Nets'
+			}
+		},
+		{
+			name: 'netsCreate',
+			path: '/nets/create',
+			component: () => import("../vue/views/nets/create"),
+			meta: {
+				title: 'Create Net'
+			}
+		},
+		{
+			name: 'netsEdit',
+			path: '/nets/edit/:id',
+			component: () => import("../vue/views/nets/edit"),
+			meta: {
+				title: 'Edit Net'
+			}
+		},
 
 	],
 });

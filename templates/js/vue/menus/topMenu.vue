@@ -8,6 +8,9 @@
 				<li class="nav-item">
 					<router-link :to="{name: 'datacenters'}" class="nav-link" active-class="active" exact>Datacenters</router-link>
 				</li>
+				<li class="nav-item">
+					<router-link :to="{name: 'nets'}" class="nav-link" active-class="active" exact>Nets</router-link>
+				</li>
 			</ul>
 		</div>
 	</nav>

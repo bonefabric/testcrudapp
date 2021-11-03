@@ -39,6 +39,10 @@ export default {
 	name: "edit",
 	beforeMount() {
 		const dc = this.$store.getters.datacenters.find(dc => dc.id === this.$route.params.id);
+		if (dc === undefined) {
+			this.$router.push({name: 'datacenters'});
+			return;
+		}
 		this.datacenter = dc.dc;
 		this.email = dc.login;
 		this.password = dc.pass;

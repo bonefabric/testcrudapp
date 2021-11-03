@@ -8,15 +8,15 @@ import (
 	"testcrudapp/repository"
 )
 
-func DcHandle(router *gin.Engine) {
+func NetHandle(router *gin.Engine) {
 
-	router.POST("/api/datacenters/list", func(context *gin.Context) {
+	router.POST("/api/nets/list", func(context *gin.Context) {
 		if !auth.Check(context) {
 			context.Status(403)
 			return
 		}
-		dcRepo := repository.GetDcRepository()
-		list, err := dcRepo.Select()
+		netRepo := repository.GetNetRepository()
+		list, err := netRepo.Select()
 		if err != nil {
 			context.JSON(http.StatusInternalServerError, err.Error())
 			return
@@ -24,13 +24,13 @@ func DcHandle(router *gin.Engine) {
 		context.JSON(http.StatusOK, convertListToArray(list))
 	})
 
-	router.POST("/api/datacenters/create", func(context *gin.Context) {
+	router.POST("/api/nets/create", func(context *gin.Context) {
 		//TODO auth, validation
-		var dc entity.Dc
-		dcRepo := repository.GetDcRepository()
-		if err := context.ShouldBindJSON(&dc); err == nil {
+		var net entity.Net
+		netRepo := repository.GetNetRepository()
+		if err := context.ShouldBindJSON(&net); err == nil {
 			var id int64
-			id, err = dcRepo.Insert(dc)
+			id, err = netRepo.Insert(net)
 			if err != nil {
 				context.JSON(http.StatusInternalServerError, err.Error())
 				return
@@ -45,11 +45,11 @@ func DcHandle(router *gin.Engine) {
 		}
 	})
 
-	router.POST("/api/datacenters/delete/:id", func(context *gin.Context) {
+	router.POST("/api/nets/delete/:id", func(context *gin.Context) {
 		//TODO auth
 		id := context.Param("id")
-		dcRepo := repository.GetDcRepository()
-		_, err := dcRepo.Remove(id)
+		netRepo := repository.GetNetRepository()
+		_, err := netRepo.Remove(id)
 		if err != nil {
 			context.JSON(http.StatusBadRequest, err.Error())
 			return
@@ -57,13 +57,13 @@ func DcHandle(router *gin.Engine) {
 		context.JSON(http.StatusOK, true)
 	})
 
-	router.POST("/api/datacenters/update", func(context *gin.Context) {
+	router.POST("/api/nets/update", func(context *gin.Context) {
 		//TODO auth
-		dcRepo := repository.GetDcRepository()
-		var dc entity.Dc
-		if err := context.ShouldBindJSON(&dc); err == nil {
+		netRepo := repository.GetNetRepository()
+		var net entity.Net
+		if err := context.ShouldBindJSON(&net); err == nil {
 			var id int64
-			id, err = dcRepo.Update(dc)
+			id, err = netRepo.Update(net)
 			if err != nil {
 				context.JSON(http.StatusInternalServerError, err.Error())
 				return

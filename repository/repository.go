@@ -14,7 +14,6 @@ type Repo interface {
 	Remove(doc interface{}) (int64, error)
 }
 
-//DbConnection - Database Connectin Pool
 var DbConnection *sql.DB
 
 func SetupRepo() (err error) {
