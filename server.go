@@ -24,7 +24,7 @@ func main() {
 	router.LoadHTMLFiles("./templates/app.html")
 
 	auth.Route(router)
-	handler.Dc_handle(router)
+	handler.DcHandle(router)
 
 	router.GET("/bundle/:name", func(c *gin.Context) {
 		name := c.Param("name")

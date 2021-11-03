@@ -10,15 +10,26 @@ export default new Vuex.Store({
 			authorized: false,
 			email: '',
 			password: '',
+		},
+		application: {
+			datacenters: {
+				list: [],
+			}
 		}
 	},
 	getters: {
 		isAuthorized: state => state.account.authorized,
+		email: state => state.account.email,
+		password: state => state.account.password,
+
+		datacenters: state => state.application.datacenters.list,
 	},
 	mutations: {
 		setAuthorized: (state, value = true) => state.account.authorized = value,
 		setEmail: (state, email) => state.account.email = email,
 		setPassword: (state, password) => state.account.password = password,
+
+		setDatacenters: (state, data) => state.application.datacenters.list = data,
 	},
 	actions: {
 
@@ -43,6 +54,16 @@ export default new Vuex.Store({
 			state.commit('setPassword', data.password);
 			localStorage.setItem('email', data.email);
 			localStorage.setItem('password', data.password);
+		},
+
+		async loadDatacenters(state) {
+			state.commit('setDatacenters', []);
+			const result = await axios.post('/api/datacenters/list', {
+				email: state.getters.email,
+				password: state.getters.password,
+			});
+			if (result.status !== 200) throw 'Error ' + result.status;
+			state.commit('setDatacenters', result.data);
 		}
 
 	},

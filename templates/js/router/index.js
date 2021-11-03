@@ -24,10 +24,9 @@ export default new VueRouter({
 				title: 'Log in'
 			}
 		},
-
 		{
 			name: 'datacenters',
-			path: 'datacenters',
+			path: '/datacenters',
 			component: () => import("../vue/views/datacenters/index"),
 			meta: {
 				title: 'Datacenters'

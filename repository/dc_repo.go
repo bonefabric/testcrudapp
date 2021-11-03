@@ -3,8 +3,8 @@ package repository
 import (
 	"container/list"
 	"database/sql"
+	"fmt"
 	util "github.com/lakshanwd/db-helper/mysql"
-	"log"
 	"testcrudapp/entity"
 )
 
@@ -20,8 +20,11 @@ func (repo DcRepo) Select() (*list.List, error) {
 	reader := func(rows *sql.Rows, collection *list.List) {
 		var dc entity.Dc
 		err := rows.Scan(&dc.Id, &dc.Name, &dc.Login, &dc.Pass, &dc.Comment)
+		if err != nil {
+			fmt.Println("SQL error")
+			return
+		}
 		collection.PushBack(dc)
-		log.Fatal(err)
 	}
-	return util.ExecuteReader(DbConnection, "select book_id, book_name, book_author from tbl_book", reader)
+	return util.ExecuteReader(DbConnection, "select id, dc, login, pass, comment from datacenter", reader)
 }
