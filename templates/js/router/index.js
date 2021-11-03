@@ -103,5 +103,31 @@ export default new VueRouter({
 			}
 		},
 
+		//ESXIs
+		{
+			name: 'esxis',
+			path: '/esxis',
+			component: () => import("../vue/views/esxis/index"),
+			meta: {
+				title: 'ESXIs'
+			}
+		},
+		{
+			name: 'esxisCreate',
+			path: '/esxis/create',
+			component: () => import("../vue/views/esxis/create"),
+			meta: {
+				title: 'Create ESXI'
+			}
+		},
+		{
+			name: 'esxisEdit',
+			path: '/esxis/edit/:id',
+			component: () => import("../vue/views/esxis/edit"),
+			meta: {
+				title: 'Edit ESXI'
+			}
+		},
+
 	],
 });

@@ -23,6 +23,10 @@ export default new Vuex.Store({
 			ips: {
 				list: [],
 				loaded: false,
+			},
+			esxis: {
+				list: [],
+				loaded: false,
 			}
 		}
 	},
@@ -39,6 +43,9 @@ export default new Vuex.Store({
 
 		ips: state => state.application.ips.list,
 		ipsLoaded: state => state.application.ips.loaded,
+
+		esxis: state => state.application.esxis.list,
+		esxisLoaded: state => state.application.esxis.loaded,
 	},
 	mutations: {
 		setAuthorized: (state, value = true) => state.account.authorized = value,
@@ -56,6 +63,10 @@ export default new Vuex.Store({
 		setIps: (state, data) => {
 			state.application.ips.list = data;
 			state.application.ips.loaded = true;
+		},
+		setEsxis: (state, data) => {
+			state.application.esxis.list = data;
+			state.application.esxis.loaded = true;
 		},
 	},
 	actions: {
@@ -231,6 +242,62 @@ export default new Vuex.Store({
 
 		async deleteIp(state, id) {
 			const result = await axios.post('/api/ips/delete/' + id, {
+				email: state.getters.email,
+				password: state.getters.password,
+			});
+			if (result.status !== 200) {
+				if (result.data) throw result.data;
+				throw 'Error ' + result.status;
+			}
+		},
+
+
+		async loadEsxis(state) {
+			const result = await axios.post('/api/esxis/list', {
+				email: state.getters.email,
+				password: state.getters.password,
+			});
+			if (result.status !== 200) throw 'Error ' + result.status;
+			state.commit('setEsxis', result.data);
+		},
+
+		async saveEsxi(state, data) {
+			const result = await axios.post('/api/esxis/create', {
+				email: state.getters.email,
+				password: state.getters.password,
+
+				dc_id: data.dc_id,
+				esxname: data.esxname,
+				ip_id: data.ip_id,
+				info: data.info,
+				net_id: data.net_id,
+			});
+			if (result.status !== 200) {
+				if (result.data) throw result.data;
+				throw 'Error ' + result.status;
+			}
+		},
+
+		async updateEsxi(state, data) {
+			const result = await axios.post('/api/esxis/update', {
+				email: state.getters.email,
+				password: state.getters.password,
+
+				id: data.id,
+				dc_id: data.dc_id,
+				esxname: data.esxname,
+				ip_id: data.ip_id,
+				info: data.info,
+				net_id: data.net_id,
+			});
+			if (result.status !== 200) {
+				if (result.data) throw result.data;
+				throw 'Error ' + result.status;
+			}
+		},
+
+		async deleteEsxi(state, id) {
+			const result = await axios.post('/api/esxis/delete/' + id, {
 				email: state.getters.email,
 				password: state.getters.password,
 			});

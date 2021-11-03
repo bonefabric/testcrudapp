@@ -27,6 +27,7 @@ func main() {
 	handler.DcHandle(router)
 	handler.NetHandle(router)
 	handler.IpHandle(router)
+	handler.EsxiHandle(router)
 
 	router.GET("/bundle/:name", func(c *gin.Context) {
 		name := c.Param("name")
