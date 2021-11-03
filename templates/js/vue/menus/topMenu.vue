@@ -6,7 +6,8 @@
 					<router-link :to="{name: 'index'}" class="nav-link" active-class="active" exact>Overview</router-link>
 				</li>
 				<li class="nav-item">
-					<router-link :to="{name: 'datacenters'}" class="nav-link" active-class="active" exact>Datacenters</router-link>
+					<router-link :to="{name: 'datacenters'}" class="nav-link" active-class="active" exact>Datacenters
+					</router-link>
 				</li>
 				<li class="nav-item">
 					<router-link :to="{name: 'nets'}" class="nav-link" active-class="active" exact>Nets</router-link>
@@ -16,6 +17,9 @@
 				</li>
 				<li class="nav-item">
 					<router-link :to="{name: 'esxis'}" class="nav-link" active-class="active" exact>ESXIs</router-link>
+				</li>
+				<li class="nav-item">
+					<router-link :to="{name: 'vms'}" class="nav-link" active-class="active" exact>VMs</router-link>
 				</li>
 			</ul>
 		</div>

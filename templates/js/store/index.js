@@ -27,6 +27,10 @@ export default new Vuex.Store({
 			esxis: {
 				list: [],
 				loaded: false,
+			},
+			vms: {
+				list: [],
+				loaded: false,
 			}
 		}
 	},
@@ -46,6 +50,9 @@ export default new Vuex.Store({
 
 		esxis: state => state.application.esxis.list,
 		esxisLoaded: state => state.application.esxis.loaded,
+
+		vms: state => state.application.vms.list,
+		vmsLoaded: state => state.application.vms.loaded,
 	},
 	mutations: {
 		setAuthorized: (state, value = true) => state.account.authorized = value,
@@ -67,6 +74,10 @@ export default new Vuex.Store({
 		setEsxis: (state, data) => {
 			state.application.esxis.list = data;
 			state.application.esxis.loaded = true;
+		},
+		setVms: (state, data) => {
+			state.application.vms.list = data;
+			state.application.vms.loaded = true;
 		},
 	},
 	actions: {
@@ -298,6 +309,63 @@ export default new Vuex.Store({
 
 		async deleteEsxi(state, id) {
 			const result = await axios.post('/api/esxis/delete/' + id, {
+				email: state.getters.email,
+				password: state.getters.password,
+			});
+			if (result.status !== 200) {
+				if (result.data) throw result.data;
+				throw 'Error ' + result.status;
+			}
+		},
+
+		async loadVms(state) {
+			const result = await axios.post('/api/vms/list', {
+				email: state.getters.email,
+				password: state.getters.password,
+			});
+			if (result.status !== 200) throw 'Error ' + result.status;
+			state.commit('setVms', result.data);
+		},
+
+		async saveVm(state, data) {
+			const result = await axios.post('/api/vms/create', {
+				email: state.getters.email,
+				password: state.getters.password,
+
+				esx_id: data.esx_id,
+				esxname: data.esxname,
+				ip_id: data.ip_id,
+				net_id: data.net_id,
+				attr: data.attr,
+				vmname: data.vmname,
+			});
+			if (result.status !== 200) {
+				if (result.data) throw result.data;
+				throw 'Error ' + result.status;
+			}
+		},
+
+		async updateVm(state, data) {
+			const result = await axios.post('/api/vms/update', {
+				email: state.getters.email,
+				password: state.getters.password,
+
+				id: data.id,
+				esx_id: data.esx_id,
+				esxname: data.esxname,
+				ip_id: data.ip_id,
+				net_id: data.net_id,
+				attr: data.attr,
+				vmname: data.vmname,
+			});
+			if (result.status !== 200) {
+				if (result.data) throw result.data;
+				throw 'Error ' + result.status;
+			}
+		},
+
+		async deleteVm(state, id) {
+			const result = await axios.post('/api/vms/delete/' + id, {
 				email: state.getters.email,
 				password: state.getters.password,
 			});

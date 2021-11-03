@@ -8,7 +8,7 @@
     "watch": "webpack --watch"
   },
   "author": "Insaf Burangulov",
-  "license": "MIT",
+  "license": "proprietary",
   "devDependencies": {
     "@babel/core": "^7.16.0",
     "@popperjs/core": "^2.10.2",

@@ -129,5 +129,31 @@ export default new VueRouter({
 			}
 		},
 
+		//VMs
+		{
+			name: 'vms',
+			path: '/vms',
+			component: () => import("../vue/views/vms/index"),
+			meta: {
+				title: 'VMs'
+			}
+		},
+		{
+			name: 'vmsCreate',
+			path: '/vms/create',
+			component: () => import("../vue/views/vms/create"),
+			meta: {
+				title: 'Create VM'
+			}
+		},
+		{
+			name: 'vmsEdit',
+			path: '/vms/edit/:id',
+			component: () => import("../vue/views/vms/edit"),
+			meta: {
+				title: 'Edit VM'
+			}
+		},
+
 	],
 });
