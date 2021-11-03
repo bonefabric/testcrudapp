@@ -39,6 +39,15 @@ export default new Vuex.Store({
 		email: state => state.account.email,
 		password: state => state.account.password,
 
+		config: state => {
+			return {
+				headers: {
+					'X-email': state.account.email,
+					'X-password': state.account.password,
+				}
+			}
+		},
+
 		datacenters: state => state.application.datacenters.list,
 		datacentersLoaded: state => state.application.datacenters.loaded,
 
@@ -93,11 +102,12 @@ export default new Vuex.Store({
 		},
 
 		async login(state, data) {
-			const result = await axios.post('/api/login', {
-				email: data.email,
-				password: data.password,
+			await axios.post('/api/login', null, {
+				headers: {
+					'X-email': data.email,
+					'X-password': data.password,
+				}
 			});
-			if (!result.status === 200 || result.data !== 'success!') throw 'Error ' + result.status;
 			state.commit('setAuthorized');
 			state.commit('setEmail', data.email);
 			state.commit('setPassword', data.password);
@@ -105,251 +115,144 @@ export default new Vuex.Store({
 			localStorage.setItem('password', data.password);
 		},
 
+		logout(state) {
+			state.commit('setAuthorized', false);
+			state.commit('setEmail', '');
+			state.commit('setPassword', '');
+			localStorage.removeItem('email');
+			localStorage.removeItem('password');
+		},
+
 		async loadDatacenters(state) {
-			const result = await axios.post('/api/datacenters/list', {
-				email: state.getters.email,
-				password: state.getters.password,
-			});
-			if (result.status !== 200) throw 'Error ' + result.status;
+			const result = await axios.post('/api/datacenters/list', null, state.getters.config);
 			state.commit('setDatacenters', result.data);
 		},
 
 		async saveDatacenter(state, data) {
-			const result = await axios.post('/api/datacenters/create', {
-				email: state.getters.email,
-				password: state.getters.password,
-
+			await axios.post('/api/datacenters/create', {
 				dc: data.dc_name,
 				login: data.dc_email,
 				pass: data.dc_pass,
 				comment: data.dc_comment,
-			});
-			if (result.status !== 200) {
-				if (result.data) throw result.data;
-				throw 'Error ' + result.status;
-			}
+			}, state.getters.config);
 		},
 
 		async deleteDatacenter(state, id) {
-			const result = await axios.post('/api/datacenters/delete/' + id, {
-				email: state.getters.email,
-				password: state.getters.password,
-			});
-			if (result.status !== 200) {
-				if (result.data) throw result.data;
-				throw 'Error ' + result.status;
-			}
+			await axios.post('/api/datacenters/delete/' + id, null, state.getters.config);
 		},
 
 		async updateDatacenter(state, data) {
-			const result = await axios.post('/api/datacenters/update', {
-				email: state.getters.email,
-				password: state.getters.password,
-
+			await axios.post('/api/datacenters/update', {
 				id: data.id,
 				dc: data.dc_name,
 				login: data.dc_email,
 				pass: data.dc_pass,
 				comment: data.dc_comment,
-			});
-			if (result.status !== 200) {
-				if (result.data) throw result.data;
-				throw 'Error ' + result.status;
-			}
+			}, state.getters.config);
 		},
 
 		async loadNets(state) {
-			const result = await axios.post('/api/nets/list', {
-				email: state.getters.email,
-				password: state.getters.password,
-			});
-			if (result.status !== 200) throw 'Error ' + result.status;
+			const result = await axios.post('/api/nets/list', null, state.getters.config);
 			state.commit('setNets', result.data);
 		},
 
 		async saveNet(state, data) {
-			const result = await axios.post('/api/nets/create', {
-				email: state.getters.email,
-				password: state.getters.password,
-
+			await axios.post('/api/nets/create', {
 				dc_id: data.net_dc_id,
 				net: data.net_name,
 				mask: data.net_mask,
 				gateway: data.net_gateway,
 				comment: data.net_comment,
-			});
-			if (result.status !== 200) {
-				if (result.data) throw result.data;
-				throw 'Error ' + result.status;
-			}
+			}, state.getters.config);
 		},
 
 		async updateNet(state, data) {
-			const result = await axios.post('/api/nets/update', {
-				email: state.getters.email,
-				password: state.getters.password,
-
+			await axios.post('/api/nets/update', {
 				id: data.id,
 				dc_id: data.dc_id,
 				net: data.net,
 				mask: data.mask,
 				gateway: data.gateway,
 				comment: data.comment,
-			});
-			if (result.status !== 200) {
-				if (result.data) throw result.data;
-				throw 'Error ' + result.status;
-			}
+			}, state.getters.config);
 		},
 
 		async deleteNet(state, id) {
-			const result = await axios.post('/api/nets/delete/' + id, {
-				email: state.getters.email,
-				password: state.getters.password,
-			});
-			if (result.status !== 200) {
-				if (result.data) throw result.data;
-				throw 'Error ' + result.status;
-			}
+			await axios.post('/api/nets/delete/' + id, null, state.getters.config);
 		},
 
 		async loadIps(state) {
-			const result = await axios.post('/api/ips/list', {
-				email: state.getters.email,
-				password: state.getters.password,
-			});
-			if (result.status !== 200) throw 'Error ' + result.status;
+			const result = await axios.post('/api/ips/list', null, state.getters.config);
 			state.commit('setIps', result.data);
 		},
 
 		async saveIp(state, data) {
-			const result = await axios.post('/api/ips/create', {
-				email: state.getters.email,
-				password: state.getters.password,
-
+			await axios.post('/api/ips/create', {
 				ip: data.ip,
 				net_id: data.net_id,
-			});
-			if (result.status !== 200) {
-				if (result.data) throw result.data;
-				throw 'Error ' + result.status;
-			}
+			}, state.getters.config);
 		},
 
 		async updateIp(state, data) {
-			const result = await axios.post('/api/ips/update', {
-				email: state.getters.email,
-				password: state.getters.password,
-
+			await axios.post('/api/ips/update', {
 				id: data.id,
 				ip: data.ip,
 				net_id: data.net_id,
-			});
-			if (result.status !== 200) {
-				if (result.data) throw result.data;
-				throw 'Error ' + result.status;
-			}
+			}, state.getters.config);
 		},
 
 		async deleteIp(state, id) {
-			const result = await axios.post('/api/ips/delete/' + id, {
-				email: state.getters.email,
-				password: state.getters.password,
-			});
-			if (result.status !== 200) {
-				if (result.data) throw result.data;
-				throw 'Error ' + result.status;
-			}
+			await axios.post('/api/ips/delete/' + id, null, state.getters.config);
 		},
 
-
 		async loadEsxis(state) {
-			const result = await axios.post('/api/esxis/list', {
-				email: state.getters.email,
-				password: state.getters.password,
-			});
-			if (result.status !== 200) throw 'Error ' + result.status;
+			const result = await axios.post('/api/esxis/list', null, state.getters.config);
 			state.commit('setEsxis', result.data);
 		},
 
 		async saveEsxi(state, data) {
-			const result = await axios.post('/api/esxis/create', {
-				email: state.getters.email,
-				password: state.getters.password,
-
+			await axios.post('/api/esxis/create', {
 				dc_id: data.dc_id,
 				esxname: data.esxname,
 				ip_id: data.ip_id,
 				info: data.info,
 				net_id: data.net_id,
-			});
-			if (result.status !== 200) {
-				if (result.data) throw result.data;
-				throw 'Error ' + result.status;
-			}
+			}, state.getters.config);
 		},
 
 		async updateEsxi(state, data) {
-			const result = await axios.post('/api/esxis/update', {
-				email: state.getters.email,
-				password: state.getters.password,
-
+			await axios.post('/api/esxis/update', {
 				id: data.id,
 				dc_id: data.dc_id,
 				esxname: data.esxname,
 				ip_id: data.ip_id,
 				info: data.info,
 				net_id: data.net_id,
-			});
-			if (result.status !== 200) {
-				if (result.data) throw result.data;
-				throw 'Error ' + result.status;
-			}
+			}, state.getters.config);
 		},
 
 		async deleteEsxi(state, id) {
-			const result = await axios.post('/api/esxis/delete/' + id, {
-				email: state.getters.email,
-				password: state.getters.password,
-			});
-			if (result.status !== 200) {
-				if (result.data) throw result.data;
-				throw 'Error ' + result.status;
-			}
+			await axios.post('/api/esxis/delete/' + id, null, state.getters.config);
 		},
 
 		async loadVms(state) {
-			const result = await axios.post('/api/vms/list', {
-				email: state.getters.email,
-				password: state.getters.password,
-			});
-			if (result.status !== 200) throw 'Error ' + result.status;
+			const result = await axios.post('/api/vms/list', null, state.getters.config);
 			state.commit('setVms', result.data);
 		},
 
 		async saveVm(state, data) {
-			const result = await axios.post('/api/vms/create', {
-				email: state.getters.email,
-				password: state.getters.password,
-
+			await axios.post('/api/vms/create', {
 				esx_id: data.esx_id,
 				esxname: data.esxname,
 				ip_id: data.ip_id,
 				net_id: data.net_id,
 				attr: data.attr,
 				vmname: data.vmname,
-			});
-			if (result.status !== 200) {
-				if (result.data) throw result.data;
-				throw 'Error ' + result.status;
-			}
+			}, state.getters.config);
 		},
 
 		async updateVm(state, data) {
-			const result = await axios.post('/api/vms/update', {
-				email: state.getters.email,
-				password: state.getters.password,
-
+			await axios.post('/api/vms/update', {
 				id: data.id,
 				esx_id: data.esx_id,
 				esxname: data.esxname,
@@ -357,22 +260,11 @@ export default new Vuex.Store({
 				net_id: data.net_id,
 				attr: data.attr,
 				vmname: data.vmname,
-			});
-			if (result.status !== 200) {
-				if (result.data) throw result.data;
-				throw 'Error ' + result.status;
-			}
+			}, state.getters.config);
 		},
 
 		async deleteVm(state, id) {
-			const result = await axios.post('/api/vms/delete/' + id, {
-				email: state.getters.email,
-				password: state.getters.password,
-			});
-			if (result.status !== 200) {
-				if (result.data) throw result.data;
-				throw 'Error ' + result.status;
-			}
+			await axios.post('/api/vms/delete/' + id, null, state.getters.config);
 		},
 
 	},

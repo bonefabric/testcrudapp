@@ -29,7 +29,7 @@
 		<div v-if="loading" class="mt-3">
 			Loading...
 		</div>
-		<div class="alert alert-danger mt-3" role="alert" v-if="error.length">
+		<div class="alert alert-danger mt-3" role="alert" v-if="error">
 			{{ error }}
 		</div>
 	</div>

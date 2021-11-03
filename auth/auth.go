@@ -15,12 +15,9 @@ type Account struct {
 var Admin Account
 
 func Check(context *gin.Context) bool {
-	var user Account
-	if err := context.ShouldBindJSON(&user); err != nil {
-		context.Status(404)
-		return false
-	}
-	return Admin.Email == user.Email && Admin.Password == user.Password
+	email := context.GetHeader("X-email")
+	password := context.GetHeader("X-password")
+	return Admin.Email == email && Admin.Password == password
 }
 
 func Route(router *gin.Engine) {

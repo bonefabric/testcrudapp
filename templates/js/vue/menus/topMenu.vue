@@ -1,6 +1,6 @@
 <template>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-		<div class="container">
+		<div class="container flex-row justify-content-between">
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 				<li class="nav-item">
 					<router-link :to="{name: 'index'}" class="nav-link" active-class="active" exact>Overview</router-link>
@@ -22,13 +22,20 @@
 					<router-link :to="{name: 'vms'}" class="nav-link" active-class="active" exact>VMs</router-link>
 				</li>
 			</ul>
+			<a href="" class="nav-link" @click.prevent="logout">Log out</a>
 		</div>
 	</nav>
 </template>
 
 <script>
 export default {
-	name: "topMenu"
+	name: "topMenu",
+	methods: {
+		logout() {
+			this.$store.dispatch('logout');
+			this.$router.push({name: 'login'});
+		}
+	}
 }
 </script>
 
