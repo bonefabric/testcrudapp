@@ -24,6 +24,16 @@ export default new VueRouter({
 				title: 'Log in'
 			}
 		},
+
+		//Datacenters
+		{
+			name: 'datacenters',
+			path: '/datacenters',
+			component: () => import("../vue/views/datacenters/index"),
+			meta: {
+				title: 'Datacenters'
+			}
+		},
 		{
 			name: 'datacentersCreate',
 			path: '/datacenters/create',
@@ -33,13 +43,14 @@ export default new VueRouter({
 			}
 		},
 		{
-			name: 'datacenters',
-			path: '/datacenters',
-			component: () => import("../vue/views/datacenters/index"),
+			name: 'datacentersEdit',
+			path: '/datacenters/edit/:id',
+			component: () => import("../vue/views/datacenters/edit"),
 			meta: {
-				title: 'Datacenters'
+				title: 'Edit datacenter'
 			}
 		},
+
 
 	],
 });

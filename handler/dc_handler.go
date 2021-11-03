@@ -61,4 +61,25 @@ func DcHandle(router *gin.Engine) {
 		context.JSON(http.StatusOK, true)
 	})
 
+	router.POST("/api/datacenters/update", func(context *gin.Context) {
+		//TODO auth
+		dcRepo := repository.GetDcRepository()
+		var dc entity.Dc
+		if err := context.ShouldBindJSON(&dc); err == nil {
+			var id int64
+			id, err = dcRepo.Update(dc)
+			if err != nil {
+				context.JSON(http.StatusInternalServerError, err.Error())
+				return
+			}
+			if !(id > 0) {
+				context.JSON(http.StatusConflict, "Check your inputs")
+				return
+			}
+			context.JSON(http.StatusOK, true)
+		} else {
+			context.JSON(http.StatusBadRequest, err.Error())
+		}
+	})
+
 }

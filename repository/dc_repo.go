@@ -34,6 +34,11 @@ func (repo DcRepo) Insert(doc interface{}) (int64, error) {
 	return util.ExecuteInsert(DbConnection, "insert into datacenter(dc, login, pass, comment) values (?,?,?,?)", dc.Name, dc.Login, dc.Pass, dc.Comment)
 }
 
+func (repo DcRepo) Update(doc interface{}) (int64, error) {
+	dc := doc.(entity.Dc)
+	return util.ExecuteUpdateDelete(DbConnection, "update datacenter set dc=?, login=?, pass=?, comment=? where id=?", dc.Name, dc.Login, dc.Pass, dc.Comment, dc.Id)
+}
+
 func (repo DcRepo) Remove(id string) (int64, error) {
 	return util.ExecuteUpdateDelete(DbConnection, "delete from datacenter where id = ?", id)
 }

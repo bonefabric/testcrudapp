@@ -19,7 +19,10 @@
 				<td>{{ datacenter.login }}</td>
 				<td>{{ datacenter.pass }}</td>
 				<td>{{ datacenter.comment }}</td>
-				<td><i class="bi bi-trash" style="cursor: pointer" @click="deleteDc(datacenter.id)"></i></td>
+				<td>
+					<i class="bi bi-pencil" style="cursor: pointer" @click="$router.push({name: 'datacentersEdit', params: {id: datacenter.id}})"></i>&nbsp;
+					<i class="bi bi-trash" style="cursor: pointer" @click="deleteDc(datacenter.id)"></i>
+				</td>
 			</tr>
 			</tbody>
 		</table>

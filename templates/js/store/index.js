@@ -91,6 +91,23 @@ export default new Vuex.Store({
 				if (result.data) throw result.data;
 				throw 'Error ' + result.status;
 			}
+		},
+
+		async updateDatacenter(state, data) {
+			const result = await axios.post('/api/datacenters/update', {
+				email: state.getters.email,
+				password: state.getters.password,
+
+				id: data.id,
+				dc: data.dc_name,
+				login: data.dc_email,
+				pass: data.dc_pass,
+				comment: data.dc_comment,
+			});
+			if (result.status !== 200) {
+				if (result.data) throw result.data;
+				throw 'Error ' + result.status;
+			}
 		}
 
 	},
