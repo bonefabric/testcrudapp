@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<button class="btn btn-dark mb-3">Create new</button>
+		<button class="btn btn-dark mb-3" @click="$router.push({name: 'datacentersCreate'})">Create new</button>
 		<table class="table table-dark table-hover" v-if="!loading && !error.length">
 			<thead>
 			<tr>

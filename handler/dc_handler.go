@@ -23,4 +23,13 @@ func DcHandle(router *gin.Engine) {
 		context.JSON(http.StatusOK, convertListToArray(list))
 	})
 
+	router.POST("/api/datacenters/create", func(context *gin.Context) {
+		if !auth.Check(context) {
+			context.Status(403)
+			return
+		}
+		//dcRepo := repository.GetDcRepository()
+		context.String(200, "tested")
+	})
+
 }

@@ -25,12 +25,21 @@ export default new VueRouter({
 			}
 		},
 		{
+			name: 'datacentersCreate',
+			path: '/datacenters/create',
+			component: () => import("../vue/views/datacenters/create"),
+			meta: {
+				title: 'Create datacenter'
+			}
+		},
+		{
 			name: 'datacenters',
 			path: '/datacenters',
 			component: () => import("../vue/views/datacenters/index"),
 			meta: {
 				title: 'Datacenters'
 			}
-		}
+		},
+
 	],
 });

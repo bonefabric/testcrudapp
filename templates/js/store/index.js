@@ -64,6 +64,19 @@ export default new Vuex.Store({
 			});
 			if (result.status !== 200) throw 'Error ' + result.status;
 			state.commit('setDatacenters', result.data);
+		},
+
+		async saveDatacenter(state, data) {
+			const result = await axios.post('/api/datacenters/create', {
+				email: state.getters.email,
+				password: state.getters.password,
+
+				dc_name: data.dc_name,
+				dc_email: data.dc_email,
+				dc_pass: data.dc_pass,
+				dc_comment: data.dc_comment,
+			});
+			if (result.status !== 200) throw 'Error ' + result.status;
 		}
 
 	},
