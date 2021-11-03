@@ -33,9 +33,14 @@ func DcHandle(router *gin.Engine) {
 		var dc entity.Dc
 		dcRepo := repository.GetDcRepository()
 		if err := context.ShouldBindJSON(&dc); err == nil {
-			_, err = dcRepo.Insert(dc)
+			var id int64
+			id, err = dcRepo.Insert(dc)
 			if err != nil {
 				context.JSON(http.StatusInternalServerError, err.Error())
+				return
+			}
+			if !(id > 0) {
+				context.JSON(http.StatusConflict, "Check your inputs")
 				return
 			}
 			context.JSON(http.StatusOK, true)

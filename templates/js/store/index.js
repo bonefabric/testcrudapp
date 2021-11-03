@@ -76,7 +76,10 @@ export default new Vuex.Store({
 				pass: data.dc_pass,
 				comment: data.dc_comment,
 			});
-			if (result.status !== 200) throw 'Error ' + result.status;
+			if (result.status !== 200) {
+				if (result.data) throw result.data;
+				throw 'Error ' + result.status;
+			}
 		}
 
 	},

@@ -25,7 +25,7 @@
 				<span class="spinner-border spinner-border-sm" v-if="loading" role="status" aria-hidden="true"></span>
 				Save
 			</button>
-			<div class="alert alert-danger mt-3" role="alert" v-if="error.length > 0">
+			<div class="alert alert-danger mt-3" role="alert" v-if="error">
 				{{ error }}
 			</div>
 		</form>
