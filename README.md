@@ -17,7 +17,7 @@
 /api/nets/list
 /api/nets/create
 /api/nets/delete/:id
-\/api/nets/update
+/api/nets/update
 
 /api/ips/list
 /api/ips/create
@@ -35,3 +35,4 @@
 /api/vms/update
 
 ```
+Авторизация происходит путем установки заколовков запросов **X-email** и **X-password**
